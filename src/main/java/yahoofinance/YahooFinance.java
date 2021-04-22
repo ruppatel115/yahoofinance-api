@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import yahoofinance.histquotes.HistQuotesRequest;
+import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
 import yahoofinance.quotes.fx.FxQuote;
 import yahoofinance.quotes.csv.FxQuotesRequest;
@@ -412,5 +413,5 @@ public class YahooFinance {
         }
         return stocks;
     }
-    
+
 }

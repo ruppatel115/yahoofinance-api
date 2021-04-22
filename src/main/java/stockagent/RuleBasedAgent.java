@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 
-public class RuleBasedAgent {
+public class RuleBasedAgent implements StockAgent{
 
     //private double buyingPower;
 
@@ -23,9 +23,7 @@ public class RuleBasedAgent {
 
     Random random = new Random();
 
-    public RuleBasedAgent(Portfolio portfolio, MarketSensor sensor) throws IOException {
-        this.portfolio = portfolio;
-        this.sensor = sensor;
+    public RuleBasedAgent() throws IOException {
 
     }
 
@@ -54,12 +52,16 @@ public class RuleBasedAgent {
 
 
 
+
+
         }
 
         else{
             System.out.println("COULDN'T BUY STOCK DUE TO INSUFFICIENT FUNDS " + symbol);
 
         }
+
+        //System.out.println(n);
 
     }
 
@@ -69,18 +71,23 @@ public class RuleBasedAgent {
 
 
 
-        double valueBoughtAt = portfolio.getPriceBoughtAt().get(stock);
+        if(portfolio.getPorfolio().containsKey(stock)){
+            double valueBoughtAt = portfolio.getPriceBoughtAt().get(stock);
 
-        if(currPrice.doubleValue() > valueBoughtAt){
-            portfolio.setBuyingPower(currPrice.doubleValue()*portfolio.getPorfolio().get(stock));
-            portfolio.getPorfolio().remove(stock);
-            portfolio.getPriceBoughtAt().remove(stock);
 
+
+            if(currPrice.doubleValue() > valueBoughtAt) {
+                portfolio.setBuyingPower(currPrice.doubleValue() * portfolio.getPorfolio().get(stock));
+                portfolio.getPorfolio().remove(stock);
+                portfolio.getPriceBoughtAt().remove(stock);
+            }
 
         }
 
+
         else{
-            System.out.println("SELLING FOR LESS THAN BOUGHT AT ");
+            System.out.println("SELLING FOR LESS THAN BOUGHT AT OR DON'T OWN STOCK");
+
 
         }
 

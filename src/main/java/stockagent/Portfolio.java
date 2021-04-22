@@ -38,6 +38,19 @@ public class Portfolio implements TraderPortfolio {
         }
 
 
+    public void listPorfolio() {
+            for(Stock key : portfolio.keySet()){
+                System.out.print(key);
+                System.out.println(portfolio.get(key));
+            }
+
+
+
+
+
+    }
+
+
 
         @Override
         public double getBuyingPower() {

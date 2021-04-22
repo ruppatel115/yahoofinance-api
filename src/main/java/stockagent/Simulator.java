@@ -3,12 +3,10 @@ package stockagent;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
+import yahoofinance.histquotes.Interval;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Simulator {
 
@@ -18,12 +16,17 @@ public class Simulator {
 
     private Portfolio portfolio = new Portfolio(1000000);
     private MarketSensor sensor = new MarketSensor();
+    private Calendar from = Calendar.getInstance();
+    private Calendar to = Calendar.getInstance();
+    private Interval daily = Interval.DAILY;
+    private RuleBasedAgent agent;
 
 
 
 
-    public Simulator() throws IOException {
-        this.portfolio = portfolio;
+    public Simulator(StockAgent stockAgent) throws IOException {
+        from.add(Calendar.YEAR, -1);
+
     }
 
     public List<Stock> getStockInfo(String [] symbols) throws IOException {
@@ -35,10 +38,6 @@ public class Simulator {
         return stockList;
 
     }
-
-
-
-
 
 
     public Map<Stock,List<HistoricalQuote>> getHistoricalData(List<Stock>stockList) throws IOException {
@@ -64,4 +63,55 @@ public class Simulator {
     public MarketSensor getSensor() {
         return sensor;
     }
-}
+
+
+    public double priceOnDay(Stock stock, List<HistoricalQuote>list) throws IOException {
+
+
+
+        return sensor.getStockPrice(stock.getSymbol()).doubleValue();
+
+
+
+    }
+
+
+
+    public void yearSimulator() throws IOException {
+        Calendar start = Calendar.getInstance();
+        start.setTime(from.getTime());
+        Calendar end = Calendar.getInstance();
+        end.setTime(to.getTime());
+
+        for (Date date = start.getTime(); start.before(end); start.add(Calendar.DATE, 1), date = start.getTime()) {
+
+
+
+
+
+                //System.out.println(portfolio.getBuyingPower());
+//
+//
+//
+//
+//                double price = sensor.getStockPrice(stockList.get(i).getSymbol()).doubleValue();
+//
+//
+//                agent.buyStock(sensor, stockList.get(i).getSymbol());
+//
+//
+//                System.out.println(price);
+
+//                System.out.println(price);
+
+
+            }
+            // Do your job here with `date`.
+        }
+
+        // System.out.println(portfolio);
+
+    }
+
+
+
