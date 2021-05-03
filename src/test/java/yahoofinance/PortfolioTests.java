@@ -3,8 +3,9 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+import java.util.Map.Entry;
 
 import org.junit.Test;
 import org.junit.Assert.*;
@@ -28,10 +29,10 @@ public class PortfolioTests {
         PortfolioManager testManager = new PortfolioManager(testPortfolio);
 
         //empty portfolio
-        assertEquals(0, testPortfolio.getPortfolio().size());
+        assertEquals(true, testPortfolio.getPortfolio().isEmpty());
 
         //buying power
-        assertEquals(10000, testPortfolio.getBuyingPower(), 0.001);
+        assertEquals(100000, testPortfolio.getBuyingPower(), 0.001);
 
         //stock to add
         Stock baba = stockList.get(1);
@@ -45,10 +46,12 @@ public class PortfolioTests {
 
         //checking portfolio
         assertEquals(1, testPortfolio.getPortfolio().size());
-        assertEquals(baba, testPortfolio.getPortfolio().get("BABA"));
+        assertEquals("BABA", testPortfolio.getPortfolio().keySet().iterator().next().getSymbol());
+        assertEquals(3, testPortfolio.getPortfolio().entrySet().iterator().next().getValue().intValue());
 
         //buying power
         assertEquals(100000-currPrice*3, testPortfolio.getBuyingPower(), 0.001);
+        
 
         //adding a different stock
         Stock tesla = stockList.get(2);
@@ -59,8 +62,10 @@ public class PortfolioTests {
         testManager.addAssets(tesla.getSymbol(), 1, currPrice);
 
         //checking portfolio
+        Iterator<Entry<Stock,Integer>> iterator = testPortfolio.getPortfolio().entrySet().iterator();
+        iterator.next();
         assertEquals(2, testPortfolio.getPortfolio().size());
-        assertEquals(tesla, testPortfolio.getPortfolio().get("TSLA"));
+        assertEquals(1, iterator.next().getValue().intValue());
 
         //buying power
         assertEquals(oldBP-currPrice, testPortfolio.getBuyingPower(), 0.001);

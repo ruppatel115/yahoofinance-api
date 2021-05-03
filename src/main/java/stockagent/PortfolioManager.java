@@ -61,13 +61,13 @@ public class PortfolioManager {
         }
     }
 
-    public void addAssets(String symbol, int shares, double pricing){
+    public void addAssets(String symbol, int shares, double pricing) throws IOException{
         if (portfolio.getPortfolio().containsKey(symbol)){
-            portfolio.getPortfolio().put(symbol, portfolio.getPortfolio().get(symbol)+shares);
+            portfolio.getPortfolio().put(YahooFinance.get(symbol), portfolio.getPortfolio().get(symbol)+shares);
         }
         else{
             portfolio.getPriceBoughtAt().put((symbol), pricing);
-            portfolio.getPortfolio().put(symbol, shares);
+            portfolio.getPortfolio().put(YahooFinance.get(symbol), shares);
         }        
         portfolio.setBuyingPower(portfolio.getBuyingPower() - (pricing * shares));        
     }

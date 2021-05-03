@@ -15,7 +15,7 @@ public class Portfolio implements TraderPortfolio {
         private double buyingPower;
 
         //better version of portfolio?
-        private HashMap <String, Integer> portfolio = new HashMap<String, Integer>();
+        private HashMap <Stock, Integer> portfolio = new HashMap<Stock, Integer>();
 
 
         private HashMap<String, Double>priceBoughtAt = new HashMap<String, Double>();
@@ -28,7 +28,7 @@ public class Portfolio implements TraderPortfolio {
 
 
         @Override
-        public HashMap<String, Integer> getPortfolio() {
+        public HashMap<Stock, Integer>getPortfolio() {
 
             return portfolio;
 
