@@ -50,26 +50,31 @@ public class PortfolioManager {
                 double currValue = portfolio.getPriceBoughtAt().get(symbol);
                 double currTotal = sharesValue*currValue;
                 sharesValue += shares;
-                portfolio.getPortfolio().put((symbol), (int) sharesValue);
                 double amount = pricing.doubleValue()*shares;
-
                 double newTotal = ((currTotal+amount)/sharesValue);
-                portfolio.getPriceBoughtAt().put((symbol), newTotal);
-
-
-
-
-                portfolio.setBuyingPower(num - currMoney);
+                addAssets(symbol, shares, pricing, newTotal);
             } else {
 
                 portfolio.getPortfolio().put((symbol), shares);
                 portfolio.getPriceBoughtAt().put((symbol), (pricing.doubleValue()));
-                portfolio.setBuyingPower(num - currMoney);
+                portfolio.setBuyingPower(num - pricing.doubleValue()*shares);
+                addAssets(symbol, shares, pricing, pricing.doubleValue());
 
 
             }
 
         }
+    }
+
+    public void addAssets(String symbol, int shares, BigDecimal pricing, double priceBoughtAt){
+        if (portfolio.getPortfolio().containsKey(symbol)){
+            portfolio.getPortfolio().put(symbol, portfolio.getPortfolio().get(symbol)+shares);
+        }
+        else{
+            portfolio.getPortfolio().put(symbol, shares);
+        }
+        portfolio.getPriceBoughtAt().put((symbol), priceBoughtAt);
+        portfolio.setBuyingPower(portfolio.getBuyingPower() - (pricing.doubleValue() * shares));        
     }
 
     public void sellStock(MarketSensor sensor, String symbol, int i) throws IOException {
@@ -79,10 +84,6 @@ public class PortfolioManager {
         List<HistoricalQuote>history = sensor.getHistory(symbol);
 
         BigDecimal currPrice = history.get(i).getClose();
-
-
-
-
 
         if(portfolio.getPortfolio().containsKey(symbol)){
             double valueBoughtAt = portfolio.getPriceBoughtAt().get(symbol);
@@ -97,9 +98,6 @@ public class PortfolioManager {
             }
 
         }
-
-
-
 
     }
 
