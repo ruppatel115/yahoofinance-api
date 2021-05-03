@@ -52,29 +52,24 @@ public class PortfolioManager {
                 sharesValue += shares;
                 double amount = pricing.doubleValue()*shares;
                 double newTotal = ((currTotal+amount)/sharesValue);
-                addAssets(symbol, shares, pricing, newTotal);
+                portfolio.getPriceBoughtAt().put((symbol), newTotal);
+                addAssets(symbol, shares, pricing.doubleValue());                
             } else {
-
-                portfolio.getPortfolio().put((symbol), shares);
-                portfolio.getPriceBoughtAt().put((symbol), (pricing.doubleValue()));
-                portfolio.setBuyingPower(num - pricing.doubleValue()*shares);
-                addAssets(symbol, shares, pricing, pricing.doubleValue());
-
-
+                addAssets(symbol, shares, pricing.doubleValue());
             }
 
         }
     }
 
-    public void addAssets(String symbol, int shares, BigDecimal pricing, double priceBoughtAt){
+    public void addAssets(String symbol, int shares, double pricing){
         if (portfolio.getPortfolio().containsKey(symbol)){
             portfolio.getPortfolio().put(symbol, portfolio.getPortfolio().get(symbol)+shares);
         }
         else{
+            portfolio.getPriceBoughtAt().put((symbol), pricing);
             portfolio.getPortfolio().put(symbol, shares);
-        }
-        portfolio.getPriceBoughtAt().put((symbol), priceBoughtAt);
-        portfolio.setBuyingPower(portfolio.getBuyingPower() - (pricing.doubleValue() * shares));        
+        }        
+        portfolio.setBuyingPower(portfolio.getBuyingPower() - (pricing * shares));        
     }
 
     public void sellStock(MarketSensor sensor, String symbol, int i) throws IOException {
