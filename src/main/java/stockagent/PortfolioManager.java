@@ -108,7 +108,7 @@ public class PortfolioManager {
 
         double currBuyingPower = portfolio.getBuyingPower();
 
-        for(String stock : portfolio.getPortfolio().keySet()){
+        for(Stock stock : portfolio.getPortfolio().keySet()){
             currBuyingPower += (portfolio.getPortfolio().get(stock)*portfolio.getPriceBoughtAt().get(stock));
         }
 
