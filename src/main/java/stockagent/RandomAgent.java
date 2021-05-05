@@ -27,11 +27,7 @@ public class RandomAgent {
             int i = 0;
             Map<String, Stock> purchasableStocks = sensor.getStocks();
 
-            for(Entry<String, Stock> entry: purchasableStocks.entrySet()) {
-                Stock stock = entry.getValue();
-                double price = stock.getHistory().get(i).getClose().doubleValue();
-
-                int shares = randnum.nextInt(10);
+        String randomKey = key.get(random.nextInt(key.size()));
 
                 double cost = price * shares;
 

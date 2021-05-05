@@ -16,9 +16,22 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
 
-        Simulator simulator = new Simulator();
-        String[] symbols = new String[] {"INTC", "BABA", "TSLA", "GOOG"};
-        List<Stock>stockList = simulator.getStockInfo(symbols);
+        StockAgent agent = new ModelBasedAgent();
+
+
+        Simulator simulator = new Simulator(agent);
+
+
+        Portfolio portfolio = new Portfolio(100000);
+        PortfolioManager manager = new PortfolioManager(portfolio);
+        Calendar from = Calendar.getInstance();
+        Calendar to = Calendar.getInstance();
+
+        String[] symbols = new String[]{"INTC", "BABA", "TSLA", "GOOG"};
+
+
+        List<Stock> stockList = simulator.getStockInfo(symbols);
+
 
         Map<Stock, List<HistoricalQuote>>historicalData = new HashMap<Stock, List<HistoricalQuote>>();
 
@@ -34,12 +47,41 @@ public class Main {
 
             agent.buyStock(simulator.getSensor(), agent.chooseStock(simulator.getSensor()).getSymbol());
 
-            System.out.println(simulator.getSensor().getStocks());
+        int i = 0;
+        for(Stock stock : historicalData.keySet()){
+            int size = historicalData.get(stock).size();
+            
+            while(i < 100){
 
 
-        }
+                stock = agent.chooseStock(simulator.getSensor());
 
-        //System.out.println(simulator.getPortfolio().getBuyingPower());
+
+
+                manager.buyStock(simulator.getSensor(), stock.getSymbol(), i);
+
+                stock = agent.chooseStock(simulator.getSensor());
+
+
+                if(Portfolio.getPortfolio().size() != 0) {
+                    manager.sellStock(simulator.getSensor(), stock.getSymbol(), i);
+                }
+                System.out.println("\n");
+                System.out.println("BuyingPower: ");
+                System.out.println(portfolio.getBuyingPower() + "\n");
+                System.out.println("Total Assest Value: ");
+                System.out.println(manager.getAssets(portfolio) + "\n");
+                System.out.println("Stocks/shares owned/sold: ");
+                System.out.println(Portfolio.getPortfolio() + "\n");
+                System.out.println("Stock Price Bought At/sold at: ");
+                System.out.println(Portfolio.getPriceBoughtAt() + "\n");
+
+                i+=1;
+                }
+
+            }
+
+        System.out.println("DONE");
 
 
 

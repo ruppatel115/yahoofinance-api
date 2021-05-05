@@ -53,7 +53,12 @@ public class PortfolioManager {
                 double amount = pricing.doubleValue()*shares;
                 double newTotal = ((currTotal+amount)/sharesValue);
                 portfolio.getPriceBoughtAt().put((symbol), newTotal);
-                addAssets(symbol, shares, pricing.doubleValue());                
+
+
+
+
+                portfolio.setBuyingPower(num - currMoney);
+
             } else {
                 addAssets(symbol, shares, pricing.doubleValue());
             }
