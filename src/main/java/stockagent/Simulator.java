@@ -3,34 +3,31 @@ package stockagent;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
-import yahoofinance.histquotes.Interval;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Simulator {
 
 
+
     private List<Stock> stockList = new ArrayList<Stock>();
+
     private Portfolio portfolio = new Portfolio(1000000);
-    private PortfolioManager portfolioManager = new PortfolioManager(portfolio);
-    private Calendar from = Calendar.getInstance();
-    private Calendar to = Calendar.getInstance();
     private MarketSensor sensor = new MarketSensor();
 
 
 
-    //takes stock agent
-    //loop through each day and tell agent what agent to buy
-    //portfolio manager buy and sell
 
-
-    public Simulator(StockAgent Agent) throws IOException {
-        setFrom(from);
+    public Simulator() throws IOException {
+        this.portfolio = portfolio;
     }
 
-    public List<Stock> getStockInfo(String[] symbols) throws IOException {
-        for (int i = 0; i < symbols.length; i++) {
+    public List<Stock> getStockInfo(String [] symbols) throws IOException {
+        for(int i =0; i < symbols.length; i++){
 
             stockList.add(YahooFinance.get(symbols[i]));
         }
@@ -40,23 +37,23 @@ public class Simulator {
     }
 
 
-    public Map<Stock, List<HistoricalQuote>> getHistoricalData(List<Stock> stockList) throws IOException {
 
-        Map<Stock, List<HistoricalQuote>> data = new HashMap<Stock, List<HistoricalQuote>>();
 
-        for (int i = 0; i < stockList.size(); i++) {
 
-            data.put(stockList.get(i), stockList.get(i).getHistory(from, to, Interval.DAILY));
+
+    public Map<Stock,List<HistoricalQuote>> getHistoricalData(List<Stock>stockList) throws IOException {
+
+        Map<Stock, List<HistoricalQuote>>data = new HashMap<Stock, List<HistoricalQuote>>();
+
+        for(int i =0; i < stockList.size(); i++){
+
+            data.put(stockList.get(i), sensor.getHistory(stockList.get(i).getSymbol()));
 
         }
 
         return data;
 
     }
-
-
-
-
 
 
     public Portfolio getPortfolio() {
@@ -67,20 +64,4 @@ public class Simulator {
     public MarketSensor getSensor() {
         return sensor;
     }
-
-
-    public void setFrom(Calendar from) {
-        from.add(Calendar.YEAR, -1);
-    }
-
-
-    public Calendar getFrom(){
-        return from;
-    }
-
-
-    public Calendar getTo(){
-        return to;
-    }
-
 }

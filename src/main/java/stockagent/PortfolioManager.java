@@ -2,10 +2,12 @@ package stockagent;
 
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
+import yahoofinance.histquotes.HistoricalQuote;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 
 public class PortfolioManager {
 
@@ -20,64 +22,100 @@ public class PortfolioManager {
 
 
 
-    public void buyStock(MarketSensor sensor, String symbol) throws IOException {
-        Stock stock = YahooFinance.get(symbol);
-        BigDecimal pricing = sensor.getStockPrice(symbol);
+    public void buyStock(MarketSensor sensor, String symbol, int i) throws IOException {
+        //Stock stock = YahooFinance.get(symbol);
+        List<HistoricalQuote>history = sensor.getHistory(symbol);
 
-        double currMoney = (portfolio.getBuyingPower())*.10;
+        //System.out.println(history.get(i));
+
+
+
+        BigDecimal pricing = history.get(i).getClose();
+
+
+        //System.out.println(pricing);
+
+        double currMoney = (portfolio.getBuyingPower()) * .10;
 
         double num = portfolio.getBuyingPower();
 
-        if(currMoney > pricing.doubleValue()) {
-            int shares = (int) (currMoney/pricing.doubleValue());
-
-            //possibly change
-
-
-            portfolio.getPortfolio().put(stock, shares);
-            portfolio.getPriceBoughtAt().put(stock, (pricing.doubleValue()));
-            portfolio.setBuyingPower(num-currMoney);
+        if (currMoney > pricing.doubleValue()) {
+            int shares = (int) (currMoney / pricing.doubleValue());
 
 
 
+            if (portfolio.getPortfolio().containsKey(symbol)) {
+
+                double sharesValue = portfolio.getPortfolio().get((symbol));
+                double currValue = portfolio.getPriceBoughtAt().get(symbol);
+                double currTotal = sharesValue*currValue;
+                sharesValue += shares;
+                double amount = pricing.doubleValue()*shares;
+                double newTotal = ((currTotal+amount)/sharesValue);
+                portfolio.getPriceBoughtAt().put((symbol), newTotal);
+                addAssets(symbol, shares, pricing.doubleValue());                
+            } else {
+                addAssets(symbol, shares, pricing.doubleValue());
+            }
 
         }
+    }
 
+    public void addAssets(String symbol, int shares, double pricing) throws IOException{
+        if (portfolio.getPortfolio().containsKey(symbol)){
+            portfolio.getPortfolio().put(YahooFinance.get(symbol), portfolio.getPortfolio().get(symbol)+shares);
+        }
         else{
-            System.out.println("COULDN'T BUY STOCK DUE TO INSUFFICIENT FUNDS " + symbol);
+            portfolio.getPriceBoughtAt().put((symbol), pricing);
+            portfolio.getPortfolio().put(YahooFinance.get(symbol), shares);
+        }        
+        portfolio.setBuyingPower(portfolio.getBuyingPower() - (pricing * shares));        
+    }
+
+    public void sellStock(MarketSensor sensor, String symbol, int i) throws IOException {
+//        Stock stock = YahooFinance.get(symbol);
+//        BigDecimal currPrice = sensor.getStockPrice(symbol);
+
+        List<HistoricalQuote>history = sensor.getHistory(symbol);
+
+        BigDecimal currPrice = history.get(i).getClose();
+
+        if(portfolio.getPortfolio().containsKey(symbol)){
+            double valueBoughtAt = portfolio.getPriceBoughtAt().get(symbol);
+            int shares = portfolio.getPortfolio().get(symbol);
+            if(currPrice.doubleValue() > valueBoughtAt){
+                portfolio.setBuyingPower((portfolio.getBuyingPower())+((currPrice.doubleValue()-valueBoughtAt)+valueBoughtAt)*shares);
+                portfolio.getPortfolio().remove(symbol);
+                portfolio.getPriceBoughtAt().remove(symbol);
+
+
+
+            }
 
         }
 
     }
-
-    public void sellStock(MarketSensor sensor, String symbol) throws IOException {
-        Stock stock = YahooFinance.get(symbol);
-        BigDecimal currPrice = sensor.getStockPrice(symbol);
-
-
-
-        double valueBoughtAt = portfolio.getPriceBoughtAt().get(stock);
-
-        if(currPrice.doubleValue() > valueBoughtAt){
-            portfolio.setBuyingPower(currPrice.doubleValue()*portfolio.getPortfolio().get(stock));
-            portfolio.getPortfolio().remove(stock);
-            portfolio.getPriceBoughtAt().remove(stock);
-
-
-        }
-
-        else{
-            System.out.println("SELLING FOR LESS THAN BOUGHT AT ");
-
-        }
-
-
-    }
-
 
     public Portfolio getPortfolio(Portfolio portfolio) {
 
         return portfolio;
 
     }
+
+
+    public double getAssets(Portfolio portfolio){
+
+
+        double currBuyingPower = portfolio.getBuyingPower();
+
+        for(Stock stock : portfolio.getPortfolio().keySet()){
+            currBuyingPower += (portfolio.getPortfolio().get(stock)*portfolio.getPriceBoughtAt().get(stock));
+        }
+
+
+        return currBuyingPower;
+        }
+
+
+
 }
