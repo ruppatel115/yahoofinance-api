@@ -62,7 +62,7 @@ public class PortfolioTests {
         testManager.addAssets(tesla.getSymbol(), 1, currPrice);
 
         //checking portfolio
-        Iterator<Entry<Stock,Integer>> iterator = testPortfolio.getPortfolio().entrySet().iterator();
+        Iterator<Entry<String,Integer>> iterator = testPortfolio.getPortfolio().entrySet().iterator();
         iterator.next();
         assertEquals(2, testPortfolio.getPortfolio().size());
         assertEquals(1, iterator.next().getValue().intValue());

@@ -6,6 +6,7 @@ import yahoofinance.histquotes.HistoricalQuote;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,8 @@ public class Simulator {
 
     private Portfolio portfolio = new Portfolio(1000000);
     private MarketSensor sensor = new MarketSensor();
-
+    Calendar from = Calendar.getInstance();
+    Calendar to = Calendar.getInstance();
 
 
 
@@ -63,5 +65,20 @@ public class Simulator {
 
     public MarketSensor getSensor() {
         return sensor;
+    }
+
+
+    public void setFrom(Calendar from) {
+        from.add(Calendar.YEAR, -1);
+    }
+
+
+    public Calendar getFrom(){
+        return from;
+    }
+
+
+    public Calendar getTo(){
+        return to;
     }
 }

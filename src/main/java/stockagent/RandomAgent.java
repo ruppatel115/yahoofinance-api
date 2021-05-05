@@ -2,7 +2,9 @@ package stockagent;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Map.Entry;
@@ -13,30 +15,19 @@ public class RandomAgent {
     
     private Portfolio portfolio;
     private MarketSensor sensor;
-    private Random randnum;
+    Random random = new Random();
 
-    public RandomAgent(Portfolio portfolio, MarketSensor sensor){
-        this.portfolio = portfolio;
-        this.sensor = sensor;
+    public RandomAgent(){
     }
 
-    public void buyStock() throws IOException{
-
-        while(portfolio.getBuyingPower() > 0){
-
-            int i = 0;
-            Map<String, Stock> purchasableStocks = sensor.getStocks();
+    public Stock chooseStock(MarketSensor sensor){
+        List<String> key = new ArrayList<String>(sensor.getStocks().keySet());
 
         String randomKey = key.get(random.nextInt(key.size()));
 
-                double cost = price * shares;
 
-                if(cost <= portfolio.getBuyingPower()){
-                    portfolio.buyStock(sensor, stock.getSymbol(), shares);
-                }
-                i++;
-            }
 
-        }
+        return sensor.getStocks().get(randomKey);
+
     }
 }
