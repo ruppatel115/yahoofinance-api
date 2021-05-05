@@ -57,14 +57,12 @@ public class Main {
         for(Stock stock : historicalData.keySet()){
             int size = historicalData.get(stock).size();
             
-            while(i < 100){
+            while(i < 10){
 
-
+                try {
                 stock = agent.chooseStock(simulator.getSensor());
 
                 manager.buyStock(simulator.getSensor(), stock.getSymbol(), i);
-
-
 
                 stock = agent.chooseStock(simulator.getSensor());
 
@@ -83,15 +81,17 @@ public class Main {
                 System.out.println(portfolio.getPriceBoughtAt() + "\n");
 
                 i+=1;
-                }
 
+                }
+                catch (IndexOutOfBoundsException e){
+                    System.out.println(stock);
+                }
             }
+            
+
+        }
 
         System.out.println("DONE");
-
-
-
-
 
     }
 }
