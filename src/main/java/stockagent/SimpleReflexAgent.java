@@ -23,7 +23,6 @@ public class SimpleReflexAgent implements StockAgent {
             Map<String, Stock> stocks = sensor.getStocks();
 
             for (Map.Entry<String, Stock> entry : stocks.entrySet()) {
-
                 data.put(entry.getValue(), sensor.getHistory(entry.getKey()));
             }
 
@@ -44,20 +43,16 @@ public class SimpleReflexAgent implements StockAgent {
 
         HashMap<String, Double> priceBoughtAt = p.getPriceBoughtAt();
 
-
         double smallestDiff = Integer.MAX_VALUE;
 
 
         for (Map.Entry<Stock, List<HistoricalQuote>> entry : data.entrySet()) {
 
-
             for (int i = 0; i < entry.getValue().size(); i++) {
-
 
                 if (portfolio.containsKey(entry.getKey().getSymbol())) {
 
                     double currValue = entry.getValue().get(i).getClose().doubleValue();
-
                     double valueBrought = priceBoughtAt.get(entry.getKey().getSymbol());
 
                     //If value is more than we bought it at, sell stock
@@ -77,10 +72,6 @@ public class SimpleReflexAgent implements StockAgent {
 
                     //Possibly find smallest difference for stocks for the last
                     //7 days lowest price and default to buy that stock?
-
-
-
-
 
                 }
 

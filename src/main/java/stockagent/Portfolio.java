@@ -19,11 +19,9 @@ public class Portfolio implements TraderPortfolio {
         }
 
 
-
         public  HashMap<String, Integer> getPortfolio() {
             return portfolio;
         }
-
 
 
         public double getBuyingPower() {

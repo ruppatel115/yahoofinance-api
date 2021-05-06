@@ -36,14 +36,9 @@ public class Main {
         Calendar end = Calendar.getInstance();
         end.setTime(to.getTime());
 
-
-
-
-
         manager.buyStock(simulator.getSensor(), "DASH", 0);
         manager.buyStock(simulator.getSensor(), "ABT", 0);
         manager.buyStock(simulator.getSensor(), "ABBV", 0);
-
 
 
         int i = 0;
@@ -51,8 +46,7 @@ public class Main {
             //int size = historicalData.get(stock).size();
             
             while(i < 100){
-
-
+                
                 stock = agent.chooseStock(simulator.getSensor());
                 manager.buyStock(simulator.getSensor(), stock.getSymbol(), i);
                 stock = agent.chooseStock(simulator.getSensor());

@@ -22,19 +22,15 @@ public class PortfolioManager {
     public PortfolioManager(Portfolio portfolio, MarketSensor sensor){
         this.portfolio = portfolio;
         this.sensor = sensor;
-
     }
 
 
     public void buyStock(MarketSensor sensor, String symbol, int i) throws IOException {
         //Stock stock = YahooFinance.get(symbol);
         List<HistoricalQuote>history = sensor.getHistory(symbol);
-
         //System.out.println(history.get(i));
 
         BigDecimal pricing = history.get(i).getClose();
-
-
         //System.out.println(pricing);
 
         double currMoney = (portfolio.getBuyingPower()) * .10;
@@ -114,7 +110,6 @@ public class PortfolioManager {
         double currBuyingPower = portfolio.getBuyingPower();
 
         for(String stock : portfolio.getPortfolio().keySet()){
-
             currBuyingPower += (portfolio.getPortfolio().get(stock)* data.get(stock).get(i).getClose().doubleValue());
             //currBuyingPower += (portfolio.getPortfolio().get(stock)* pricing.doubleValue());
         }
