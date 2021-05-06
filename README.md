@@ -10,6 +10,9 @@ TraderPortfolio.java
 
 Sensor interface:
 SensorInterface.java
+
+Tests:
+PortfolioTests.java
 ```
 # Advanced Machine Learning Algorithm write-up
 https://docs.google.com/document/d/1v_WELneFsAaMqnWmTj0XZd2SoyfGHc4tmovEv1vouNY/edit
