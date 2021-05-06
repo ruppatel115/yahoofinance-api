@@ -17,11 +17,14 @@ import stockagent.Simulator;
 import yahoofinance.histquotes.HistoricalQuote;
 
 
+
 public class PortfolioTests {
     
     @Test
-    public void addAssetTests() throws IOException{
-        Simulator simulator = new Simulator(RandomAgent s);
+    public void buyTests() throws IOException{
+
+        RandomAgent agent = new RandomAgent();
+        Simulator simulator = new Simulator(agent);
         String[] symbols = new String[] {"INTC", "BABA", "TSLA", "GOOG"};
         List<Stock>stockList = simulator.getStockInfo(symbols);
 
@@ -35,15 +38,15 @@ public class PortfolioTests {
         //buying power
         assertEquals(100000, testPortfolio.getBuyingPower(), 0.001);
 
-        //stock to add
+        //stock to buy
         Stock baba = stockList.get(1);
         assertEquals("BABA", baba.getSymbol());
 
         //getting price
-        double currPrice = baba.getQuote().getPrice().doubleValue();
+        double currPrice = simulator.getSensor().getHistory(baba.getSymbol()).get(0).getClose().doubleValue();
 
-        //add asset
-        testManager.addAssets(baba.getSymbol(), 3, currPrice);
+        //buy stock
+        testManager.buyStock(simulator.getSensor(), baba.getSymbol(), 0);
 
         //checking portfolio
         assertEquals(1, testPortfolio.getPortfolio().size());
