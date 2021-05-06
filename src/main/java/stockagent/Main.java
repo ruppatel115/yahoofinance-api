@@ -46,7 +46,7 @@ public class Main {
             //int size = historicalData.get(stock).size();
             
             while(i < 100){
-                
+
                 stock = agent.chooseStock(simulator.getSensor());
                 manager.buyStock(simulator.getSensor(), stock.getSymbol(), i);
                 stock = agent.chooseStock(simulator.getSensor());
