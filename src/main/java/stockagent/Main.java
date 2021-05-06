@@ -19,7 +19,7 @@ public class Main {
 
 
         Portfolio portfolio = new Portfolio(100000);
-        PortfolioManager manager = new PortfolioManager(portfolio);
+        PortfolioManager manager = new PortfolioManager(portfolio, simulator.getSensor());
         Calendar from = Calendar.getInstance();
         Calendar to = Calendar.getInstance();
 
@@ -36,13 +36,19 @@ public class Main {
         Calendar end = Calendar.getInstance();
         end.setTime(to.getTime());
 
-        for(Stock stock : historicalData.keySet()) {
-            manager.buyStock(simulator.getSensor(), stock.getSymbol(), 0);
-        }
+
+
+
+
+        manager.buyStock(simulator.getSensor(), "DASH", 0);
+        manager.buyStock(simulator.getSensor(), "ABT", 0);
+        manager.buyStock(simulator.getSensor(), "ABBV", 0);
+
+
 
         int i = 0;
         for(Stock stock : historicalData.keySet()){
-            int size = historicalData.get(stock).size();
+            //int size = historicalData.get(stock).size();
             
             while(i < 100){
 
@@ -60,7 +66,7 @@ public class Main {
                 System.out.println("BuyingPower: ");
                 System.out.println(portfolio.getBuyingPower() + "\n");
                 System.out.println("Total Asset Value: ");
-                System.out.println(manager.getAssets(portfolio) + "\n");
+                System.out.println(manager.getAssets(portfolio, simulator.getSensor(), i) + "\n");
                 System.out.println("Stocks/shares owned: ");
                 System.out.println(portfolio.getPortfolio() + "\n");
                 System.out.println("Stock Price Bought At: ");
