@@ -1,9 +1,8 @@
 # Agent Definition
 https://docs.google.com/document/d/1TroFGd6kVxd9nBFP8ytaitdginuaTjSVi07jxi7q4ec/edit
 
-```
 Our agent is simple reflex agent that has the ability to buy and sell stocks based on historical data extracted from our yahoo finance api enviornment. Our agent looks at a fixed number of stocks derived from the environment by our market sensor, and decides whether to sell or buy based ony the last 100 days of closing prices per stock. If the price is higher than what our agent bought it at it will sell otherwise if the price is lower or equal to the price at which our agent bought the stock at it will continue to buy that stock, spending only 10% of it's total buying power so that it does not exceed it's total buying power on that stock. We created a random agent that buys random stocks with no limit on how much it can spend to compare the two and almost all of the time our simple reflex agent performs better than the random agent. 
-
+```
 You can find our sensors in: src/main/java/stockagent
 
 Actuator interface:
