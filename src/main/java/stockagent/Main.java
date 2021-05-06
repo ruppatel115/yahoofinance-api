@@ -15,7 +15,6 @@ public class Main {
 
         StockAgent agent = new RandomAgent();
 
-
         Simulator simulator = new Simulator(agent);
 
 
@@ -25,13 +24,9 @@ public class Main {
         Calendar to = Calendar.getInstance();
 
 
-
         List<Stock> stockList = simulator.getStockInfo(simulator.getSensor().getSymbols());
 
-
         Map<Stock, List<HistoricalQuote>> historicalData = simulator.getHistoricalData(stockList);
-
-
 
         simulator.setFrom(from);
 
@@ -41,16 +36,8 @@ public class Main {
         Calendar end = Calendar.getInstance();
         end.setTime(to.getTime());
 
-
-
-
-
         for(Stock stock : historicalData.keySet()) {
             manager.buyStock(simulator.getSensor(), stock.getSymbol(), 0);
-
-
-
-
         }
 
         int i = 0;
@@ -61,15 +48,14 @@ public class Main {
 
 
                 stock = agent.chooseStock(simulator.getSensor());
-
                 manager.buyStock(simulator.getSensor(), stock.getSymbol(), i);
-
                 stock = agent.chooseStock(simulator.getSensor());
 
 
                 if(portfolio.getPortfolio().size() > 0) {
                     manager.sellStock(simulator.getSensor(), stock.getSymbol(), i);
                 }
+
                 System.out.println("\n");
                 System.out.println("BuyingPower: ");
                 System.out.println(portfolio.getBuyingPower() + "\n");
@@ -81,15 +67,11 @@ public class Main {
                 System.out.println(portfolio.getPriceBoughtAt() + "\n");
 
                 i+=1;
-                }
-
             }
 
+        }
+
         System.out.println("DONE");
-
-
-
-
 
     }
 }

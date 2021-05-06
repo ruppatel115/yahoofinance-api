@@ -23,11 +23,7 @@ public class RandomAgent implements StockAgent {
     Random random = new Random();
 
     public RandomAgent() throws IOException {
-
-        //DO WE NEED THIS??
-
-
-
+        //DO WE NEED THIS?
     }
 
 
@@ -37,15 +33,8 @@ public class RandomAgent implements StockAgent {
 
         String randomKey = key.get(random.nextInt(key.size()));
 
-
-
         return sensor.getStocks().get(randomKey);
 
     }
-
-
-
-
-
 
 }

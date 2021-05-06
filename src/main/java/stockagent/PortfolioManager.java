@@ -19,16 +19,11 @@ public class PortfolioManager {
     }
 
 
-
-
-
     public void buyStock(MarketSensor sensor, String symbol, int i) throws IOException {
         //Stock stock = YahooFinance.get(symbol);
         List<HistoricalQuote>history = sensor.getHistory(symbol);
 
         //System.out.println(history.get(i));
-
-
 
         BigDecimal pricing = history.get(i).getClose();
 
@@ -50,59 +45,54 @@ public class PortfolioManager {
                 double currValue = portfolio.getPriceBoughtAt().get(symbol);
                 double currTotal = sharesValue*currValue;
                 sharesValue += shares;
-                portfolio.getPortfolio().put((symbol), (int) sharesValue);
                 double amount = pricing.doubleValue()*shares;
-
                 double newTotal = ((currTotal+amount)/sharesValue);
                 portfolio.getPriceBoughtAt().put((symbol), newTotal);
 
-                portfolio.setBuyingPower(num - amount);
+                portfolio.setBuyingPower(num - currMoney);
 
             } else {
-
-                portfolio.getPortfolio().put((symbol), shares);
-                portfolio.getPriceBoughtAt().put((symbol), (pricing.doubleValue()));
-                portfolio.setBuyingPower(num - (pricing.doubleValue()*shares));
-
-
+                addAssets(symbol, shares, pricing.doubleValue());
             }
 
         }
     }
 
+    public void addAssets(String symbol, int shares, double pricing) throws IOException{
+        if (portfolio.getPortfolio().containsKey(symbol)){
+            portfolio.getPortfolio().put(symbol, portfolio.getPortfolio().get(symbol)+shares);
+        }
+        else{
+            portfolio.getPriceBoughtAt().put((symbol), pricing);
+            portfolio.getPortfolio().put(symbol, shares);
+        }        
+        portfolio.setBuyingPower(portfolio.getBuyingPower() - (pricing * shares));        
+    }
+
     public void sellStock(MarketSensor sensor, String symbol, int i) throws IOException {
-//        Stock stock = YahooFinance.get(symbol);
-//        BigDecimal currPrice = sensor.getStockPrice(symbol);
+        //Stock stock = YahooFinance.get(symbol);
+        //BigDecimal currPrice = sensor.getStockPrice(symbol);
 
         List<HistoricalQuote>history = sensor.getHistory(symbol);
 
         BigDecimal currPrice = history.get(i).getClose();
 
-
-
-
-
         if(portfolio.getPortfolio().containsKey(symbol)){
             double valueBoughtAt = portfolio.getPriceBoughtAt().get(symbol);
             int shares = portfolio.getPortfolio().get(symbol);
             if(currPrice.doubleValue() > valueBoughtAt){
+
                 portfolio.setBuyingPower((portfolio.getBuyingPower())+((currPrice.doubleValue()-valueBoughtAt)+valueBoughtAt)*shares);
                 portfolio.getPortfolio().remove(symbol);
                 portfolio.getPriceBoughtAt().remove(symbol);
-
             }
 
         }
 
-
-
-
     }
 
     public Portfolio getPortfolio(Portfolio portfolio) {
-
         return portfolio;
-
     }
 
 
@@ -111,13 +101,12 @@ public class PortfolioManager {
 
         double currBuyingPower = portfolio.getBuyingPower();
 
-        for(String stock : portfolio.getPortfolio().keySet()){
-            currBuyingPower += (portfolio.getPortfolio().get(stock)* portfolio.getPriceBoughtAt().get(stock));
+        for(String symbol : portfolio.getPortfolio().keySet()){
+            currBuyingPower += (portfolio.getPortfolio().get(symbol)*portfolio.getPriceBoughtAt().get(symbol));
         }
-
 
         return currBuyingPower;
-        }
+    }
 
 
 
