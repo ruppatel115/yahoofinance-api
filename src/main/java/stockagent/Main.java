@@ -64,8 +64,6 @@ public class Main {
 
                 manager.buyStock(simulator.getSensor(), stock.getSymbol(), i);
 
-
-
                 stock = agent.chooseStock(simulator.getSensor());
 
 

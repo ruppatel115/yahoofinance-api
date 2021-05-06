@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 
-public class RandomAgent implements StockAgent{
+public class RandomAgent implements StockAgent {
 
     //private double buyingPower;
 
