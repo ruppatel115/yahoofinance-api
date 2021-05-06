@@ -12,6 +12,7 @@ import org.junit.Assert.*;
 
 import stockagent.Portfolio;
 import stockagent.PortfolioManager;
+import stockagent.RandomAgent;
 import stockagent.Simulator;
 import yahoofinance.histquotes.HistoricalQuote;
 
@@ -20,7 +21,7 @@ public class PortfolioTests {
     
     @Test
     public void addAssetTests() throws IOException{
-        Simulator simulator = new Simulator();
+        Simulator simulator = new Simulator(RandomAgent s);
         String[] symbols = new String[] {"INTC", "BABA", "TSLA", "GOOG"};
         List<Stock>stockList = simulator.getStockInfo(symbols);
 
@@ -46,7 +47,7 @@ public class PortfolioTests {
 
         //checking portfolio
         assertEquals(1, testPortfolio.getPortfolio().size());
-        assertEquals("BABA", testPortfolio.getPortfolio().keySet().iterator().next().getSymbol());
+        assertEquals("BABA", testPortfolio.getPortfolio().keySet().iterator().next());
         assertEquals(3, testPortfolio.getPortfolio().entrySet().iterator().next().getValue().intValue());
 
         //buying power
