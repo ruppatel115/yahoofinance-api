@@ -5,6 +5,7 @@ import yahoofinance.Stock;
 import yahoofinance.histquotes.HistoricalQuote;
 
 import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.util.*;
 
 public class Main {
@@ -13,7 +14,9 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
 
-        StockAgent agent = new RandomAgent();
+
+
+        StockAgent agent = new SimpleReflexAgent();
 
         Simulator simulator = new Simulator(agent);
 
@@ -37,15 +40,23 @@ public class Main {
         end.setTime(to.getTime());
 
         manager.buyStock(simulator.getSensor(), "DASH", 0);
-        manager.buyStock(simulator.getSensor(), "ABT", 0);
+        manager.buyStock(simulator.getSensor(), "TSLA", 0);
         manager.buyStock(simulator.getSensor(), "ABBV", 0);
+
+
+
+
+        for(Stock stock : historicalData.keySet()) {
+            manager.buyStock(simulator.getSensor(), stock.getSymbol(), 0);
+
+        }
 
 
         int i = 0;
         for(Stock stock : historicalData.keySet()){
-            //int size = historicalData.get(stock).size();
+            int size = historicalData.get(stock).size();
             
-            while(i < 100){
+            while(i < size){
 
                 stock = agent.chooseStock(simulator.getSensor());
                 manager.buyStock(simulator.getSensor(), stock.getSymbol(), i);
@@ -60,6 +71,7 @@ public class Main {
                 System.out.println("BuyingPower: ");
                 System.out.println(portfolio.getBuyingPower() + "\n");
                 System.out.println("Total Asset Value: ");
+
                 System.out.println(manager.getAssets(portfolio, simulator.getSensor(), i) + "\n");
                 System.out.println("Stocks/shares owned: ");
                 System.out.println(portfolio.getPortfolio() + "\n");
@@ -75,18 +87,3 @@ public class Main {
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -11,7 +11,7 @@ import java.util.Map;
 
 public interface SensorInterface {
 
-    String[] symbols = new String[] {"INTC", "BABA", "TSLA", "GOOG"};
+    String[] symbols = new String[] {"INTC", "BABA", "TSLA", "AIR.PA", "YHOO", "GOOG"};
     //Map<String, Stock> stocks = YahooFinance.get(symbols, true);
 
 
