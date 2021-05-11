@@ -43,7 +43,8 @@ public class Predictor implements Forecaster {
 
         //averaging the differences 
         averageRateOfChange = averageRateOfChange/avgRatesofChange.size();
-        
+
+        System.out.println(averageRateOfChange);
         return averageRateOfChange;
     }
     

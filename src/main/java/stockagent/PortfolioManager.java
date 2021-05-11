@@ -27,7 +27,7 @@ public class PortfolioManager {
 
     public void buyStock(MarketSensor sensor, String symbol, int i) throws IOException {
         //Stock stock = YahooFinance.get(symbol);
-        List<HistoricalQuote>history = sensor.getHistory(symbol);
+        List<HistoricalQuote> history = sensor.getHistory(symbol);
         //System.out.println(history.get(i));
 
         BigDecimal pricing = history.get(i).getClose();
@@ -40,10 +40,10 @@ public class PortfolioManager {
         if (currMoney > pricing.doubleValue()) {
             int shares = (int) (currMoney / pricing.doubleValue());
 
-            if (portfolio.getPortfolio().containsKey(symbol)) {
+            if (portfolio.getPortfolio().containsKey(symbol) && portfolio.getPriceBoughtAt().get(symbol) > (pricing.doubleValue()) - (pricing.doubleValue() * .25)){
 
 
-              if(portfolio.getPriceBoughtAt().get(symbol) > (pricing.doubleValue()) + (pricing.doubleValue()*.05)) {
+                //if (portfolio.getPriceBoughtAt().get(symbol) > (pricing.doubleValue()) - (pricing.doubleValue() * .25)) {
 
                     double sharesValue = portfolio.getPortfolio().get((symbol));
                     double currValue = portfolio.getPriceBoughtAt().get(symbol);
@@ -58,16 +58,17 @@ public class PortfolioManager {
                     portfolio.setBuyingPower(num - amount);
                 }
 
-
-        } else {
+            else {
                 addAssets(symbol, shares, pricing.doubleValue());
             }
-            //addAssets(symbol, shares, pricing.doubleValue());
-
-
         }
+        //addAssets(symbol, shares, pricing.doubleValue());
+
 
     }
+
+
+
 
 
 
@@ -83,8 +84,6 @@ public class PortfolioManager {
 
 
     public void sellStock(MarketSensor sensor, String symbol, int i) throws IOException {
-        //Stock stock = YahooFinance.get(symbol);
-        //BigDecimal currPrice = sensor.getStockPrice(symbol);
 
         List<HistoricalQuote> history = sensor.getHistory(symbol);
 

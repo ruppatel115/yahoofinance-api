@@ -43,7 +43,6 @@ public class SimpleReflexAgent implements StockAgent {
 
         HashMap<String, Double> priceBoughtAt = p.getPriceBoughtAt();
 
-        double smallestDiff = Integer.MAX_VALUE;
 
 
         for (Map.Entry<Stock, List<HistoricalQuote>> entry : data.entrySet()) {
@@ -56,7 +55,7 @@ public class SimpleReflexAgent implements StockAgent {
                     double valueBrought = priceBoughtAt.get(entry.getKey().getSymbol());
 
                     //If value is more than we bought it at, sell stock
-                    if (currValue > valueBrought) {
+                    if (currValue > valueBrought + (valueBrought*.15)) {
                         bestStock = entry.getKey();
                     }
 

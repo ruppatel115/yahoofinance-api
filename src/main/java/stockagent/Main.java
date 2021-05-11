@@ -16,6 +16,7 @@ public class Main {
 
 
 
+
         StockAgent agent = new SimpleReflexAgent();
 
         Simulator simulator = new Simulator(agent);
@@ -46,10 +47,10 @@ public class Main {
 
 
 
-        for(Stock stock : historicalData.keySet()) {
-            manager.buyStock(simulator.getSensor(), stock.getSymbol(), 0);
-
-        }
+//        for(Stock stock : historicalData.keySet()) {
+//            manager.buyStock(simulator.getSensor(), stock.getSymbol(), 0);
+//
+//        }
 
 
         int i = 0;
@@ -59,9 +60,8 @@ public class Main {
             while(i < size){
 
                 stock = agent.chooseStock(simulator.getSensor());
-                manager.buyStock(simulator.getSensor(), stock.getSymbol(), i);
-                stock = agent.chooseStock(simulator.getSensor());
 
+                manager.buyStock(simulator.getSensor(), stock.getSymbol(), i);
 
                 if(portfolio.getPortfolio().size() > 0) {
                     manager.sellStock(simulator.getSensor(), stock.getSymbol(), i);
@@ -77,6 +77,7 @@ public class Main {
                 System.out.println(portfolio.getPortfolio() + "\n");
                 System.out.println("Stock Price Bought At: ");
                 System.out.println(portfolio.getPriceBoughtAt() + "\n");
+
 
                 i+=1;
             }
