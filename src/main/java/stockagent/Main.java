@@ -68,6 +68,10 @@ public class Main {
                 }
 
                 System.out.println("\n");
+
+                System.out.println("Day " + i);
+                System.out.println("\n");
+
                 System.out.println("BuyingPower: ");
                 System.out.println(portfolio.getBuyingPower() + "\n");
                 System.out.println("Total Asset Value: ");

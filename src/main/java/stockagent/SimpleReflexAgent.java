@@ -55,7 +55,7 @@ public class SimpleReflexAgent implements StockAgent {
                     double valueBrought = priceBoughtAt.get(entry.getKey().getSymbol());
 
                     //If value is more than we bought it at, sell stock
-                    if (currValue > valueBrought + (valueBrought*.15)) {
+                    if (currValue > valueBrought) {
                         bestStock = entry.getKey();
                     }
 
