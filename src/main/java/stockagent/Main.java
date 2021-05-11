@@ -14,6 +14,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
 
+
+
         StockAgent agent = new SimpleReflexAgent();
 
 
@@ -52,6 +54,12 @@ public class Main {
 
 
 
+
+        for(Stock stock : historicalData.keySet()) {
+            manager.buyStock(simulator.getSensor(), stock.getSymbol(), 0);
+
+        }
+
         int i = 0;
         for(Stock stock : historicalData.keySet()){
             int size = historicalData.get(stock).size();
@@ -65,7 +73,7 @@ public class Main {
 
 
 
-                //stock = agent.chooseStock(simulator.getSensor());
+                stock = agent.chooseStock(simulator.getSensor());
 
 
                 if(portfolio.getPortfolio().size() > 0) {
@@ -75,6 +83,7 @@ public class Main {
                 System.out.println("BuyingPower: ");
                 System.out.println(portfolio.getBuyingPower() + "\n");
                 System.out.println("Total Asset Value: ");
+
                 System.out.println(manager.getAssets(portfolio, simulator.getSensor(), i) + "\n");
                 System.out.println("Stocks/shares owned: ");
                 System.out.println(portfolio.getPortfolio() + "\n");
@@ -94,18 +103,3 @@ public class Main {
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

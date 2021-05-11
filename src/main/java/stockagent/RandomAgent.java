@@ -1,36 +1,24 @@
 package stockagent;
 
-
-import yahoofinance.Stock;
-import yahoofinance.YahooFinance;
-
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Map.Entry;
+
+import yahoofinance.Stock;
 
 public class RandomAgent implements StockAgent{
-
-    //private double buyingPower;
-
-
-    //better version of portfolio?
-    //private HashMap <Stock, Integer> portfolio = new HashMap<Stock,Integer>();
-
-
+    
+    private Portfolio portfolio;
     private MarketSensor sensor;
-
-
     Random random = new Random();
 
-    public RandomAgent() throws IOException {
-
-        //DO WE NEED THIS??
-
-
-
+    public RandomAgent(){
     }
-
-
 
     public Stock chooseStock(MarketSensor sensor){
         List<String> key = new ArrayList<String>(sensor.getStocks().keySet());
@@ -42,10 +30,4 @@ public class RandomAgent implements StockAgent{
         return sensor.getStocks().get(randomKey);
 
     }
-
-
-
-
-
-
 }
