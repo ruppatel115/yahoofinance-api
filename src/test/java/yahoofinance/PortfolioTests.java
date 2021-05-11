@@ -10,23 +10,26 @@ import java.util.Map.Entry;
 import org.junit.Test;
 import org.junit.Assert.*;
 
-import stockagent.Portfolio;
-import stockagent.PortfolioManager;
-import stockagent.Simulator;
+import stockagent.*;
 import yahoofinance.histquotes.HistoricalQuote;
+
+
+
+
 
 
 public class PortfolioTests {
     
     @Test
     public void addAssetTests() throws IOException{
-        Simulator simulator = new Simulator();
+        RandomAgent agent = new RandomAgent();
+        Simulator simulator = new Simulator(agent);
         String[] symbols = new String[] {"INTC", "BABA", "TSLA", "GOOG"};
         List<Stock>stockList = simulator.getStockInfo(symbols);
 
         Portfolio testPortfolio = new Portfolio(100000);
 
-        PortfolioManager testManager = new PortfolioManager(testPortfolio);
+        PortfolioManager testManager = new PortfolioManager(testPortfolio, simulator.getSensor());
 
         //empty portfolio
         assertEquals(true, testPortfolio.getPortfolio().isEmpty());
@@ -46,7 +49,7 @@ public class PortfolioTests {
 
         //checking portfolio
         assertEquals(1, testPortfolio.getPortfolio().size());
-        assertEquals("BABA", testPortfolio.getPortfolio().keySet().iterator().next().getSymbol());
+        assertEquals("BABA", testPortfolio.getPortfolio().keySet().iterator().next());
         assertEquals(3, testPortfolio.getPortfolio().entrySet().iterator().next().getValue().intValue());
 
         //buying power
@@ -74,6 +77,7 @@ public class PortfolioTests {
 
 
     
+
 
 
 

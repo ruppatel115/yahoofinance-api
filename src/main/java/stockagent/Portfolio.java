@@ -17,11 +17,12 @@ public class Portfolio implements TraderPortfolio {
 
         public Portfolio(double buyingPower){
             this.buyingPower = buyingPower;
+
+
         }
 
 
-
-        public HashMap<String, Integer> getPortfolio() {
+        public  HashMap<String, Integer> getPortfolio() {
 
             return portfolio;
 

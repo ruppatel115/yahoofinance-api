@@ -5,6 +5,7 @@ import yahoofinance.Stock;
 import yahoofinance.histquotes.HistoricalQuote;
 
 import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.util.*;
 
 public class Main {
@@ -13,14 +14,16 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
 
-        RandomAgent agent = new RandomAgent();
 
 
-        Simulator simulator = new Simulator();
+        StockAgent agent = new SimpleReflexAgent();
+
+
+        Simulator simulator = new Simulator(agent);
 
 
         Portfolio portfolio = new Portfolio(100000);
-        PortfolioManager manager = new PortfolioManager(portfolio);
+        PortfolioManager manager = new PortfolioManager(portfolio, simulator.getSensor());
         Calendar from = Calendar.getInstance();
         Calendar to = Calendar.getInstance();
 
@@ -45,11 +48,15 @@ public class Main {
 
 
 
+        manager.buyStock(simulator.getSensor(), "DASH", 0);
+        manager.buyStock(simulator.getSensor(), "TSLA", 0);
+        manager.buyStock(simulator.getSensor(), "ABBV", 0);
+
+
+
+
         for(Stock stock : historicalData.keySet()) {
             manager.buyStock(simulator.getSensor(), stock.getSymbol(), 0);
-
-
-
 
         }
 
@@ -57,7 +64,7 @@ public class Main {
         for(Stock stock : historicalData.keySet()){
             int size = historicalData.get(stock).size();
             
-            while(i < 100){
+            while(i < size){
 
 
                 stock = agent.chooseStock(simulator.getSensor());
@@ -76,7 +83,8 @@ public class Main {
                 System.out.println("BuyingPower: ");
                 System.out.println(portfolio.getBuyingPower() + "\n");
                 System.out.println("Total Asset Value: ");
-                System.out.println(manager.getAssets(portfolio) + "\n");
+
+                System.out.println(manager.getAssets(portfolio, simulator.getSensor(), i) + "\n");
                 System.out.println("Stocks/shares owned: ");
                 System.out.println(portfolio.getPortfolio() + "\n");
                 System.out.println("Stock Price Bought At: ");

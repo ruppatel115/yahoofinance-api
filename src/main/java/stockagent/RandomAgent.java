@@ -11,7 +11,7 @@ import java.util.Map.Entry;
 
 import yahoofinance.Stock;
 
-public class RandomAgent {
+public class RandomAgent implements StockAgent{
     
     private Portfolio portfolio;
     private MarketSensor sensor;
