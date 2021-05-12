@@ -10,7 +10,6 @@ public interface TraderPortfolio {
 
     public double getBuyingPower();
 
-
     public HashMap<String, Integer> getPortfolio();
 
 }

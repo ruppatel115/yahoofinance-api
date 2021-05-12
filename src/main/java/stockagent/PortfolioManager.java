@@ -1,6 +1,5 @@
 package stockagent;
 
-
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
