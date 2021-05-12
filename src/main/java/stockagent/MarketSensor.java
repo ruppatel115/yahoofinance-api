@@ -23,14 +23,11 @@ public class MarketSensor implements SensorInterface{
 
     public MarketSensor() throws IOException {
         from.add(Calendar.YEAR, -1);
-
     }
 
 
     public Map<String, Stock>getStocks(){
-
         return stocks;
-
     }
 
 
@@ -46,20 +43,17 @@ public class MarketSensor implements SensorInterface{
 
         List<HistoricalQuote>historicalQuotes = getHistory(ticker);
 
-
         for(int i =0; i < historicalQuotes.size()-1; i++) {
             return (historicalQuotes.get(i).getClose());
         }
 
         return null;
-
     }
 
 
 
     public List<HistoricalQuote>getHistory(String ticker) throws IOException {
         List<HistoricalQuote>historicalQuotes = stocks.get(ticker).getHistory(from, to, daily);
-
 
         return historicalQuotes;
     }

@@ -10,7 +10,6 @@ public class Portfolio implements TraderPortfolio {
         //better version of portfolio?
         private static HashMap <String, Integer> portfolio = new HashMap<String, Integer>();
 
-
         private static HashMap<String, Double>priceBoughtAt = new HashMap<String, Double>();
 
 
@@ -20,13 +19,9 @@ public class Portfolio implements TraderPortfolio {
         }
 
 
-
-        public HashMap<String, Integer> getPortfolio() {
-
+        public  HashMap<String, Integer> getPortfolio() {
             return portfolio;
-
         }
-
 
 
         public double getBuyingPower() {

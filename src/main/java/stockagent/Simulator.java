@@ -19,13 +19,15 @@ public class Simulator {
 
     private Portfolio portfolio = new Portfolio(1000000);
     private MarketSensor sensor = new MarketSensor();
-    Calendar from = Calendar.getInstance();
-    Calendar to = Calendar.getInstance();
+
+    //private PortfolioManager portfolioManager = new PortfolioManager(portfolio, sensor);
+    private Calendar from = Calendar.getInstance();
+    private Calendar to = Calendar.getInstance();
 
 
 
-    public Simulator() throws IOException {
-        this.portfolio = portfolio;
+    public Simulator(StockAgent Agent) throws IOException {
+        setFrom(from);
     }
 
     public List<Stock> getStockInfo(String [] symbols) throws IOException {
@@ -69,7 +71,7 @@ public class Simulator {
 
 
     public void setFrom(Calendar from) {
-        from.add(Calendar.YEAR, -1);
+        from.add(Calendar.MONTH, -4);
     }
 
 
