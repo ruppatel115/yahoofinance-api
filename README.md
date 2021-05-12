@@ -7,7 +7,7 @@ Our agent is simple reflex agent that has the ability to buy and sell stocks bas
 To run our agent all you need to do is call up Main.java and run that file. 
 
 # How To Guide 
-In order o make an agent that interacts with the enviornment, you must implement our StockAgent interface with your agent allowing yours to choose stocks that it might want to buy or sell. Then you'll need to implement a Portfolio and ProtfolioManager so that your agent has the ability to do the necessary calculations in order to decide which stocks to buy and which ones to sell. 
+In order to make an agent that interacts with the enviornment, you must implement our StockAgent interface which will in return create a MarketSensor that will allow your agent to choose stocks that it might want to buy or sell. Then you'll need to implement a Portfolio and ProtfolioManager so that your agent has the ability to do the necessary calculations in order to decide which stocks to buy and which ones to sell. 
 
 ```
 You can find our sensors in: src/main/java/stockagent
