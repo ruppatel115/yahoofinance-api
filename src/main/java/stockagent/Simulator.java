@@ -20,7 +20,6 @@ public class Simulator {
     private Portfolio portfolio = new Portfolio(1000000);
     private MarketSensor sensor = new MarketSensor();
 
-    //private PortfolioManager portfolioManager = new PortfolioManager(portfolio, sensor);
     private Calendar from = Calendar.getInstance();
     private Calendar to = Calendar.getInstance();
 

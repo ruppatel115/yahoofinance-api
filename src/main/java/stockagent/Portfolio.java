@@ -7,7 +7,6 @@ public class Portfolio implements TraderPortfolio {
 
         private static double buyingPower;
 
-        //better version of portfolio?
         private static HashMap <String, Integer> portfolio = new HashMap<String, Integer>();
 
         private static HashMap<String, Double>priceBoughtAt = new HashMap<String, Double>();

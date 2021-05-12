@@ -18,7 +18,6 @@ public class ModelBasedAgent implements StockAgent {
 
     @Override
     public Stock chooseStock( MarketSensor sensor) throws IOException {
-        // TODO Auto-generated method stub
 
         HashMap<String, Integer> portfolio = p.getPortfolio();
 

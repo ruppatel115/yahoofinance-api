@@ -15,9 +15,6 @@ import yahoofinance.histquotes.HistoricalQuote;
 
 
 
-
-
-
 public class PortfolioTests {
     
     @Test
@@ -76,7 +73,64 @@ public class PortfolioTests {
     }
 
 
+    @Test
+    public void sellTests() throws IOException{
+
+        RandomAgent agent = new RandomAgent();
+        Simulator simulator = new Simulator(agent);
+        String[] symbols = new String[] {"INTC", "BABA", "TSLA", "GOOG"};
+        List<Stock>stockList = simulator.getStockInfo(symbols);
+
+        Portfolio testPortfolio = new Portfolio(100000);
+
+        PortfolioManager testManager = new PortfolioManager(testPortfolio, simulator.getSensor());
+
+        //empty portfolio
+        assertEquals(true, testPortfolio.getPortfolio().isEmpty());
+
+        //buying power
+        assertEquals(100000, testPortfolio.getBuyingPower(), 0.001);
+        double oldBP = testPortfolio.getBuyingPower();
+
+        //buying stock
+        Stock baba = stockList.get(1);
+        double babaPrice = baba.getQuote().getPrice().doubleValue();
+        assertEquals("BABA", baba.getSymbol());
+        Stock tesla = stockList.get(2);
+        assertEquals("TSLA", tesla.getSymbol());
+        double teslaPrice = tesla.getQuote().getPrice().doubleValue();
+        testManager.addAssets("BABA", 3, babaPrice);
+        testManager.addAssets("TSLA", 3, teslaPrice);
+
+        //checking buying power
+        assertEquals(oldBP - (babaPrice*3) - (teslaPrice*3), testPortfolio.getBuyingPower(), 0.001);
+        oldBP = testPortfolio.getBuyingPower();
+
+        //selling BABA
+        double currPrice = simulator.getSensor().getHistory("BABA").get(0).getClose().doubleValue();
+        testManager.sellStock(simulator.getSensor(), "BABA", 0);
+
+        //checking buying power
+        assertEquals(oldBP + (currPrice*3), testPortfolio.getBuyingPower(), 0.001);
+        oldBP = testPortfolio.getBuyingPower();
+
+        //checking portfolio
+        assertEquals(false, testPortfolio.getPortfolio().containsKey("BABA"));
+
+        //selling TSLA
+        currPrice = simulator.getSensor().getHistory("TSLA").get(0).getClose().doubleValue();
+        testManager.sellStock(simulator.getSensor(), "TSLA", 0);
+
+        //checking buying power
+        assertEquals(oldBP + (currPrice*3), testPortfolio.getBuyingPower(), 0.001);
     
+
+        //checking portfolio
+        assertEquals(true, testPortfolio.getPortfolio().isEmpty());
+
+
+
+    }
 
 
 
