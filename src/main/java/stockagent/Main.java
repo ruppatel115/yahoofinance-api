@@ -5,7 +5,6 @@ import yahoofinance.Stock;
 import yahoofinance.histquotes.HistoricalQuote;
 
 import java.io.IOException;
-import java.lang.reflect.Modifier;
 import java.util.*;
 
 public class Main {
