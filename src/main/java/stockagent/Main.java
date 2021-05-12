@@ -80,8 +80,6 @@ public class Main {
                     System.out.println("IOException thrown");
                 }
             }
-            
-
         }
 
         System.out.println("DONE");

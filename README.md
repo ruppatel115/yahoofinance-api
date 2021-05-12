@@ -11,6 +11,8 @@ TraderPortfolio.java
 Sensor interface:
 SensorInterface.java
 
+You can find our tests in: src/main/java/test/java/yahoofinance
+
 Tests:
 PortfolioTests.java
 ```

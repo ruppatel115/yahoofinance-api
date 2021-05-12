@@ -13,19 +13,25 @@ public interface SensorInterface {
 
     String[] symbols = new String[] {"INTC", "BABA", "TSLA", "AIR.PA", "YHOO", "GOOG"};
     //Map<String, Stock> stocks = YahooFinance.get(symbols, true);
-
-
-
-    //GetStockFunction
-    //All the stocks we are going to look at and its information
-        //return a list of all the stocks we will look at, hard coded?
+    
+    /**
+     * @return a map of stocks
+     */
     public Map<String, Stock>getStocks();
 
-    //GetStockPricing
-        //Give us closing price of the stock
-    public BigDecimal getStockPrice(String stock) throws IOException;
+    /**
+     * @param ticker a stock ticker that references the stock who's closing price will be retrieved 
+     * @throws IOException when there's a connection problem
+     * @return the closing price of the desired stock in BigDecimal format
+     */
+    public BigDecimal getStockPrice(String ticker) throws IOException;
 
 
+    /**
+     * @param ticker a stock ticker that references the stock who's closing price will be retrieved 
+     * @throws IOException when there's a connection problem
+     * @return a list of historical quotes from this stock
+     */
     public List<HistoricalQuote>getHistory(String ticker) throws IOException;
 
 
