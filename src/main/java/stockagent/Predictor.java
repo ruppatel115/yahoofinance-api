@@ -29,7 +29,7 @@ public class Predictor implements Forecaster {
         double curr = 0;
 
         //adding difference in closing price between each day to list 
-        while (k != closePriceHistory.size()){
+        while (k < closePriceHistory.size()){
             curr = closePriceHistory.get(k+1);
             prev = closePriceHistory.get(k);
             avgRatesofChange.add(curr - prev);

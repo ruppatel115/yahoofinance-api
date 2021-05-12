@@ -25,15 +25,12 @@ public class SimpleReflexAgent implements StockAgent {
             for (Map.Entry<String, Stock> entry : stocks.entrySet()) {
                 data.put(entry.getValue(), sensor.getHistory(entry.getKey()));
             }
-
-
     }
 
 
     @Override
     public Stock chooseStock( MarketSensor sensor) throws IOException {
         // TODO Auto-generated method stub
-
 
         Stock bestStock = new Stock(null);
 
@@ -42,8 +39,6 @@ public class SimpleReflexAgent implements StockAgent {
         HashMap<String, Integer> portfolio = p.getPortfolio();
 
         HashMap<String, Double> priceBoughtAt = p.getPriceBoughtAt();
-
-
 
         for (Map.Entry<Stock, List<HistoricalQuote>> entry : data.entrySet()) {
 
